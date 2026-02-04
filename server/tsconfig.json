@@ -1,0 +1,28 @@
+{
+    "compilerOptions": {
+        // How transpile code look like
+        "target": "ES2020",
+        "module": "nodenext",
+        // How to interprete the code import and export when transpile
+        "moduleResolution": "nodenext",
+        "outDir": "dist",
+        // Where to start the file structure
+        "rootDir": "./src",
+        // Strict Type-Checking 
+        "strict": true,                                      
+        "noImplicitAny": true,                               
+        "strictNullChecks": true,                            
+        "strictBindCallApply": true,                         
+        "noImplicitThis": true,                              
+        "useUnknownInCatchVariables": true,                  
+
+        // Additional Linting Checks 
+        "noUnusedLocals": true,                              
+        "noUnusedParameters": true,                          
+        "noImplicitReturns": true,                           
+        "noFallthroughCasesInSwitch": true,
+        "noEmitOnError": true
+    },
+    "include": ["./src/**/*.ts","./test/**/*.ts"],
+    "exclude": ["node_modules"]
+}
