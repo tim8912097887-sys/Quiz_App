@@ -1,16 +1,17 @@
 import { Server } from "http";
+import { logger } from "@utilities/logger.js";
 
 export const handleShutdown = (server: Server) => {
        // Flag prevent mutiple shutdown
        let isShutdown = false;
        const gracefullyShutdown = async(signal: string) => {
             if(isShutdown) return;
-            console.log(`${signal} signal recieved: Shutdown process start...`);
+            logger.info(`Shutdown Start: ${signal} signal recieved,shutdown process start...`)
             isShutdown = true;
             // Prevent shutdown too long
             // 20 to 30 second for exist request finish task
             const forceExitTimout = setTimeout(() => {
-                console.log(`Exceed time limit,Forcefully shutdown`);
+                logger.warn(`ForceShutdown: exceed time limit,forcefully shutdown`)
                 process.exit(1);
             },20000)
             try {
@@ -24,8 +25,7 @@ export const handleShutdown = (server: Server) => {
                clearTimeout(forceExitTimout);
                process.exit(0);
             } catch (error) {
-                console.error(`Shutdown Error: ${error}`);
-                console.log("Forcefully Shutdown");
+                logger.error(`Shutdown Error: ${error}`);
                 process.exit(1);
             }
        }
@@ -36,11 +36,11 @@ export const handleShutdown = (server: Server) => {
     process.on("SIGTERM",gracefullyShutdown);
     // Log the unhandle exception and error before shutdown
     process.on("uncaughtException",(error) => {
-        console.error(`UncaughtException: ${error}`);
+        logger.error(`UncaughtException: ${error}`)
         gracefullyShutdown("uncaughtException");
     })
     process.on("unhandledRejection",(error) => {
-        console.error(`UncaughtError: ${error}`);
+        logger.error(`UncaughtError: ${error}`);
         gracefullyShutdown("unhandledRejection");
     })
 }

@@ -1,5 +1,11 @@
 {
     "compilerOptions": {
+        // Path alias
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["src/*"],
+            "@utilities/*": ["src/utilities/*"]
+        },
         // How transpile code look like
         "target": "ES2020",
         "module": "nodenext",
@@ -7,7 +13,7 @@
         "moduleResolution": "nodenext",
         "outDir": "dist",
         // Where to start the file structure
-        "rootDir": "./src",
+        "rootDir": "src",
         // Strict Type-Checking 
         "strict": true,                                      
         "noImplicitAny": true,                               
@@ -23,6 +29,6 @@
         "noFallthroughCasesInSwitch": true,
         "noEmitOnError": true
     },
-    "include": ["./src/**/*.ts","./test/**/*.ts"],
+    "include": ["src/**/*.ts"],
     "exclude": ["node_modules"]
 }
