@@ -8,6 +8,7 @@
             "@configs/*": ["src/configs/*"],
             "@db/*": ["src/db/*"],
             "@routes/*": ["src/routes/*"],
+            "@custom/*": ["src/custom/*"],
         },
         // How transpile code look like
         "target": "ES2020",
