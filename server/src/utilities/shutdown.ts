@@ -1,5 +1,6 @@
 import { Server } from "http";
 import { logger } from "@utilities/logger.js";
+import { dbDisconnection } from "@/db/db.js";
 
 export const handleShutdown = (server: Server) => {
        // Flag prevent mutiple shutdown
@@ -22,6 +23,7 @@ export const handleShutdown = (server: Server) => {
                     return resolve("success");
                   });
                })
+               await dbDisconnection();
                clearTimeout(forceExitTimout);
                process.exit(0);
             } catch (error) {

@@ -1,11 +1,15 @@
 import { app } from "@/app.js";
 import { logger } from "@utilities/logger.js";
 import { handleShutdown } from "@utilities/shutdown.js";
+import { env } from "@configs/env.js";
+import { dbInitialization } from "./db/db.js";
 
 (
     async() => {
         try {
-            const server = app.listen(3001,() => logger.info(`Server Listen: server is running on port 3000`));
+            // Connect to database first
+            await dbInitialization();
+            const server = app.listen(env.PORT,() => logger.info(`Server Listen: server is running on port ${env.PORT}`));
             handleShutdown(server);
         } catch (error) {
             // Handle initial db connection error

@@ -4,7 +4,10 @@
         "baseUrl": ".",
         "paths": {
             "@/*": ["src/*"],
-            "@utilities/*": ["src/utilities/*"]
+            "@utilities/*": ["src/utilities/*"],
+            "@configs/*": ["src/configs/*"],
+            "@db/*": ["src/db/*"],
+            "@routes/*": ["src/routes/*"],
         },
         // How transpile code look like
         "target": "ES2020",
