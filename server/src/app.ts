@@ -3,6 +3,7 @@ import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import { logger } from "@utilities/logger.js";
 import { v1Router } from "@routes/v1/index.js";
+import { errorHandler } from "@middleware/errorHandler.js";
 
 export const app = express();
 
@@ -14,6 +15,9 @@ app.use(express.urlencoded());
 app.use(cookieParser());
 // V1 routes
 app.use("/api",v1Router);
+
+// Error Handler
+app.use(errorHandler);
 // Health check route
 app.get("/healthcheck",(_,res) => {
       logger.info("Api Health Check: health");

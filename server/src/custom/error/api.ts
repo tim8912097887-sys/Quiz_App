@@ -20,9 +20,9 @@ export enum ERROR_TYPE {
 
 export class ApiError extends Error {
 
-    protected type: ERROR_TYPE;
-    protected statusCode:  ERROR_CODE;
-    protected isOperational: boolean;
+    public type: ERROR_TYPE;
+    public statusCode:  ERROR_CODE;
+    public isOperational: boolean;
 
     constructor(errorCode: ERROR_CODE,errorType: ERROR_TYPE,message: string,isOperational = false) {
         super(message);
