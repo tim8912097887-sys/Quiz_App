@@ -2,12 +2,14 @@ import { app } from "@/app.js";
 import { logger } from "@utilities/logger.js";
 import { handleShutdown } from "@utilities/shutdown.js";
 import { env } from "@configs/env.js";
-import { dbInitialization } from "./db/db.js";
+import { dbInitialization } from "@db/db.js";
+import { cachDbConnection } from "@db/cachDb.js";
 
 (
     async() => {
         try {
             // Connect to database first
+            await cachDbConnection();
             await dbInitialization();
             const server = app.listen(env.PORT,() => logger.info(`Server Listen: server is running on port ${env.PORT}`));
             handleShutdown(server);

@@ -1,1 +1,20 @@
 error: Database Creation: error: syntax error at or near "$1" 2026-02-05T12:25:49.988Z
+error: ApiError: User data invalid 2026-02-06T08:43:06.516Z
+error: ApiError: User data invalid 2026-02-06T08:44:45.962Z
+error: ApiError: Email or password is not correct 2026-02-06T12:27:11.960Z
+error: ApiError: Invalid input: expected object, received undefined 2026-02-06T12:28:36.980Z
+error: UncaughtError: error: syntax error at or near "VALUE" 2026-02-06T12:29:30.347Z
+error: UncaughtError: error: syntax error at or near "VALUE" 2026-02-06T12:31:04.873Z
+error: UncaughtError: Error: User already exist 2026-02-06T12:32:45.173Z
+error: UncaughtError: Error: User already exist 2026-02-06T12:35:34.495Z
+error: ApiError: User already exist 2026-02-06T12:43:05.065Z
+error: ApiError: User already exist 2026-02-06T12:43:12.537Z
+error: ApiError: Username at least two character 2026-02-06T12:43:18.595Z
+error: ApiError: Invalid Email 2026-02-06T12:43:42.347Z
+error: ApiError: User already exist 2026-02-06T12:43:55.198Z
+error: ApiError: Email or password is not correct 2026-02-06T12:45:21.273Z
+error: ApiError: Email or password is not correct 2026-02-06T12:45:33.038Z
+error: ApiError: User already exist 2026-02-07T00:45:40.097Z
+error: ApiError: Unauthicated 2026-02-07T03:18:30.250Z
+error: ApiError: Unauthicated 2026-02-07T03:18:33.134Z
+error: JWT Verification: JsonWebTokenError: invalid signature 2026-02-07T03:54:09.803Z

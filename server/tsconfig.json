@@ -10,6 +10,7 @@
             "@routes/*": ["src/routes/*"],
             "@custom/*": ["src/custom/*"],
             "@middleware/*": ["src/middleware/*"],
+            "@schema/*": ["src/schema/*"],
         },
         // How transpile code look like
         "target": "ES2020",

@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(cookieParser());
 // V1 routes
-app.use("/api",v1Router);
+app.use("/api/v1",v1Router);
 
 // Error Handler
 app.use(errorHandler);

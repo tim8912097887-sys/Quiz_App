@@ -1,3 +1,4 @@
+import { ServerConflictError } from "@custom/error/serverConflict.js";
 import { env } from "@configs/env.js";
 import { logger } from "@utilities/logger.js";
 import { Client, Pool } from "pg";
@@ -85,14 +86,47 @@ export const dbQuery = async<T>(queryType: string,queryString: string,value: T[]
         const duration = end-start;
         logger.info(`Query: ${queryType} ${duration}ms Success`);
         return result;  
-     } catch (error) {
+     } catch (error: any) {
         const end = Date.now();
         const duration = end-start;
         logger.error(`Query: ${queryType} ${duration}ms ${error}`);
+        // 23505 is the Postgres code for unique_violation
+        if (error.code === '23505') {
+            throw new ServerConflictError("User already exist");
+        }
         throw error
      }
 }
 
 export const dbInitialization = async() => {
     await createDatabaseIfNotExist(env.PGDATABASE);
+}
+
+export const createUniqueUser = async(username: string,email: string,password: string) => {
+    const client = await pool.connect();
+    try {
+        // Start the transaction
+        await client.query('BEGIN');
+        const findResult = await client.query("SELECT 1 FROM users WHERE email = $1",[email]);
+        if(findResult.rowCount) {
+            throw new ServerConflictError("User already exist");
+        }
+        const insertText = `
+            INSERT INTO users (username,email,password)
+            VALUES ($1,$2,$3)
+            RETURNING id, username, email
+        `;
+        // It will wait for first one to insert,and fail with second with same unique column
+        const result = await client.query(insertText,[username,email,password]);
+        // Commit the transaction
+        await client.query('COMMIT');
+        return result.rows[0];
+    } catch (error) {
+        // Rollback the error
+        await client.query('ROLLBACK');
+        throw error
+    } finally {
+        // Release prevent run out of client
+        client.release();
+    }
 }
