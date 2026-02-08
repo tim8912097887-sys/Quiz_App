@@ -88,3 +88,25 @@ error: ApiError: Code 169197 not exist 2026-02-08T02:18:17.079Z
 error: ApiError: User already exist 2026-02-08T02:18:25.379Z
 error: ApiError: Code 693085 not exist 2026-02-08T02:19:41.003Z
 error: ApiError: Code 594799 not exist 2026-02-08T02:21:58.097Z
+error: ApiError: Code 594799 not exist 2026-02-08T03:26:59.491Z
+error: ApiError: Invalid Email 2026-02-08T03:27:11.347Z
+error: ApiError: Account not verify yet 2026-02-08T03:27:49.910Z
+error: ApiError: Account not verify yet 2026-02-08T03:27:55.011Z
+error: ApiError: Email or password is not correct 2026-02-08T03:28:00.270Z
+error: ApiError: Account not verify yet 2026-02-08T03:28:05.777Z
+error: ApiError: Email or password is not correct 2026-02-08T03:28:50.843Z
+error: ApiError: Email or password is not correct 2026-02-08T03:29:17.933Z
+error: ApiError: Invalid input: expected object, received undefined 2026-02-08T03:36:19.947Z
+error: ApiError: Fail to send the email 2026-02-08T03:36:50.370Z
+error: ApiError: User not exist 2026-02-08T03:39:22.847Z
+error: ApiError: Invalid Email 2026-02-08T03:44:52.092Z
+error: ApiError: Code 304934 not exist 2026-02-08T03:46:07.492Z
+error: ApiError: Otp expired 2026-02-08T03:46:25.329Z
+error: ApiError: User not Found 2026-02-08T03:46:34.670Z
+error: ApiError: Account not verify yet 2026-02-08T03:46:55.473Z
+error: ApiError: Account not verify yet 2026-02-08T03:48:09.541Z
+error: ApiError: Account not verify yet 2026-02-08T03:48:24.972Z
+error: ApiError: Code 121496 not exist 2026-02-08T03:48:35.024Z
+error: ApiError: Code 561779 not exist 2026-02-08T03:50:16.579Z
+error: ApiError: Code 209858 not exist 2026-02-08T03:51:51.514Z
+error: ApiError: Email or password is not correct 2026-02-08T03:52:18.558Z
