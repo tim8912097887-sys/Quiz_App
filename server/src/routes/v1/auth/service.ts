@@ -8,15 +8,19 @@ import { verifyToken } from "@utilities/token.js";
 import { env } from "@configs/env.js";
 import { setCache } from "@db/cachQuery.js";
 import { ServerError } from "@custom/error/server.js";
+import { futureDate } from "@utilities/date.js";
+import { VerifySignupType } from "@schema/verify/verifySignup.js";
+import { NotFoundError } from "@custom/error/notFound.js";
+import { UnauthorizedError } from "@custom/error/unauthorized.js";
 
 export const loginUser = async({ email,password }: LoginUserType) => {
     // Check accout existence
-    let queryString = `
+    const queryString = `
       SELECT id,username,email,password 
       FROM users
       WHERE email = $1
     `
-    let value = [email];
+    const value = [email];
     const result = await dbQuery<string>("Get User with email",queryString,value);
     if(!result.rowCount) throw new ServerConflictError("Email or password is not correct");
     const isMatch = await comparePassword(password,result.rows[0].password);
@@ -53,4 +57,59 @@ export const logoutUser = async(authorization: (string | undefined)) => {
         }
     }
     return;
+}
+
+export const createOtp = async(otp: number) => {
+
+    const expired_at = futureDate(60).toString();
+    const value = [otp,expired_at];
+    const result = await dbQuery("Insert otp code",`
+        INSERT INTO otp (code,expired_at)
+        VALUES ($1,$2)    
+    `,value);
+    if(!result.rowCount) throw new ServerError("Fail to create otp");
+    return;
+}
+
+export const verifyOtp = async({ email,otp }: VerifySignupType) => {
+
+    let queryString = `
+      SELECT expired_at FROM otp 
+      WHERE code = $1
+    `
+    let value = [otp];
+
+    const result = await dbQuery("Select Otp",queryString,value);
+    if(!result.rowCount) throw new NotFoundError(`Code ${otp} not exist`);
+    const expired_at = Number(result.rows[0].expired_at);
+    const currentTime = Date.now();
+    if(expired_at<currentTime) {
+         const deleteString = `
+            DELETE FROM otp
+            WHERE code = $1
+         `; 
+         const deleteValue = [otp];
+         const result = await dbQuery("Delete Otp",deleteString,deleteValue);
+         if(!result.rowCount) throw new ServerError("Fail to Delete");
+         throw new UnauthorizedError("Otp expired");
+    } else {
+         const updateString = `
+            UPDATE users
+            SET is_verify = true
+            WHERE email = $1
+            RETURNING id, username, email
+         `
+         const  updatedValue = [email];
+
+         const result = await dbQuery("Update user",updateString,updatedValue);
+         if(!result.rowCount) throw new ServerError(`Fail to verify`);
+         const deleteString = `
+            DELETE FROM otp
+            WHERE code = $1
+         `; 
+         const deleteValue = [otp];
+         const deleteResult = await dbQuery("Delete Otp",deleteString,deleteValue);
+         if(!deleteResult.rowCount) throw new ServerError("Fail to Delete");
+         return result.rows[0];
+    }
 }

@@ -16,6 +16,8 @@ const EnvSchema = z.object({
     REDIS_PASSWORD: z.string("Redis password should be string").nonempty("Redis password can't be empty"),
     REDIS_HOST: z.string("Redis host should be string").nonempty("Redis host can't be empty"),
     REDIS_PORT: z.string("Redis port should be string").nonempty("Redis port can't be empty"),
+    EMAIL_SENDER_USER: z.string("Email sender user should be string").nonempty("Email sender user can't be empty"),
+    RESEND_API_KEY: z.string("Api key should be string").nonempty("Api key can't be empty"),
 })
 
 const result = EnvSchema.safeParse(process.env);

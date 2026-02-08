@@ -18,3 +18,73 @@ error: ApiError: User already exist 2026-02-07T00:45:40.097Z
 error: ApiError: Unauthicated 2026-02-07T03:18:30.250Z
 error: ApiError: Unauthicated 2026-02-07T03:18:33.134Z
 error: JWT Verification: JsonWebTokenError: invalid signature 2026-02-07T03:54:09.803Z
+error: UnExpected Error: error: syntax error at end of input 2026-02-07T04:28:57.590Z
+error: UnExpected Error: TypeError: Cannot read properties of undefined (reading 'id') 2026-02-07T04:32:08.997Z
+error: UnExpected Error: TypeError: Cannot read properties of undefined (reading 'id') 2026-02-07T04:32:59.350Z
+error: UnExpected Error: error: syntax error at or near "ds" 2026-02-07T04:35:04.609Z
+error: UnExpected Error: TypeError: Cannot read properties of undefined (reading 'id') 2026-02-07T04:35:47.432Z
+error: UnExpected Error: error: syntax error at or near "' and password = '' OR 1=1'" 2026-02-07T04:38:49.922Z
+error: UnExpected Error: error: unterminated quoted string at or near "' and password = '' OR 1=1''
+    " 2026-02-07T04:41:18.262Z
+error: UnExpected Error: error: syntax error at or near "' and password = '" 2026-02-07T04:41:26.625Z
+error: UnExpected Error: error: syntax error at or near "' and password = '" 2026-02-07T04:41:32.414Z
+error: UnExpected Error: error: syntax error at or near "' and password = '" 2026-02-07T04:41:57.701Z
+error: UnExpected Error: error: syntax error at or near "' and password = '" 2026-02-07T04:44:15.859Z
+error: UnExpected Error: error: syntax error at or near "' and password = '" 2026-02-07T04:44:36.950Z
+error: UnExpected Error: error: syntax error at or near "' and password = '" 2026-02-07T04:44:52.194Z
+error: UnExpected Error: error: unterminated quoted string at or near "'1
+    " 2026-02-07T04:54:57.391Z
+error: UnExpected Error: error: unterminated quoted string at or near "'1
+    " 2026-02-07T04:55:10.653Z
+error: UnExpected Error: error: unterminated quoted string at or near "'1
+    " 2026-02-07T04:55:34.729Z
+error: UnExpected Error: error: unterminated quoted string at or near "'1
+    " 2026-02-07T04:56:30.484Z
+error: UnExpected Error: error: unterminated quoted string at or near "'1
+    " 2026-02-07T04:57:03.641Z
+error: UnExpected Error: error: unterminated quoted string at or near "'1
+    " 2026-02-07T04:57:28.155Z
+error: UnExpected Error: error: unterminated quoted string at or near "' OR 1=1 -- and password = dsf
+    " 2026-02-07T04:58:02.610Z
+error: UnExpected Error: TypeError: Cannot read properties of undefined (reading 'id') 2026-02-07T04:59:04.534Z
+error: UnExpected Error: TypeError: Cannot read properties of undefined (reading 'id') 2026-02-07T04:59:06.522Z
+error: UnExpected Error: error: column "kd" does not exist 2026-02-07T05:00:11.152Z
+error: ApiError: Email or password is not found 2026-02-07T05:02:27.043Z
+error: UncaughtError: Error: Invalid greeting. response=* OK [CAPABILITY IMAP4rev1 LITERAL+ SASL-IR CHILDREN UNSELECT MOVE IDLE APPENDLIMIT AUTH=PLAIN] IMAP4rev1 Service Ready: * OK [CAPABILITY IMAP4rev1 LITERAL+ SASL-IR CHILDREN UNSELECT MOVE IDLE APPENDLIMIT AUTH=PLAIN] IMAP4rev1 Service Ready 2026-02-07T07:27:25.891Z
+error: UnExpected Error: Error: Invalid greeting. response=* OK [CAPABILITY IMAP4rev1 LITERAL+ SASL-IR CHILDREN UNSELECT MOVE IDLE APPENDLIMIT AUTH=PLAIN] IMAP4rev1 Service Ready: * OK [CAPABILITY IMAP4rev1 LITERAL+ SASL-IR CHILDREN UNSELECT MOVE IDLE APPENDLIMIT AUTH=PLAIN] IMAP4rev1 Service Ready 2026-02-07T07:31:29.828Z
+error: ApiError: User already exist 2026-02-07T08:26:14.263Z
+error: UnExpected Error: Error: Invalid greeting. response=* OK [CAPABILITY IMAP4rev1 LITERAL+ SASL-IR CHILDREN UNSELECT MOVE IDLE APPENDLIMIT AUTH=PLAIN] IMAP4rev1 Service Ready: * OK [CAPABILITY IMAP4rev1 LITERAL+ SASL-IR CHILDREN UNSELECT MOVE IDLE APPENDLIMIT AUTH=PLAIN] IMAP4rev1 Service Ready 2026-02-07T08:26:53.574Z
+error: UnExpected Error: Error: Invalid greeting. response=* OK [CAPABILITY IMAP4rev1 LITERAL+ SASL-IR CHILDREN UNSELECT MOVE IDLE APPENDLIMIT AUTH=PLAIN] IMAP4rev1 Service Ready: * OK [CAPABILITY IMAP4rev1 LITERAL+ SASL-IR CHILDREN UNSELECT MOVE IDLE APPENDLIMIT AUTH=PLAIN] IMAP4rev1 Service Ready 2026-02-07T08:28:20.366Z
+error: UnExpected Error: error: duplicate key value violates unique constraint "users_username_key" 2026-02-07T08:52:14.703Z
+error: UnExpected Error: Error: Mail command failed: 550 5.7.1 Sending from domain mailtrap.io is not allowed 2026-02-07T09:31:36.331Z
+error: UnExpected Error: Error: Mail command failed: 550 5.7.1 Sending from domain demomailtrap.com is not allowed 2026-02-07T09:33:28.925Z
+error: UnExpected Error: Error: Message failed: 550 5.7.1 Security check pending. Mailtrap is checking your domain credibility, it usually takes one business day. 2026-02-07T09:35:11.686Z
+error: UnExpected Error: Error: Can't send mail - all recipients were rejected: 554 5.7.1 Demo domains can only be used to send emails to account owners. You can only send testing emails to your own email address. 2026-02-07T09:36:27.120Z
+error: UnExpected Error: error: duplicate key value violates unique constraint "users_username_key" 2026-02-07T11:26:29.782Z
+error: ApiError: Invalid input: expected object, received undefined 2026-02-07T12:52:38.579Z
+error: ApiError: Invalid input: expected object, received undefined 2026-02-07T12:56:13.440Z
+error: ApiError: Minimal number is 100000 2026-02-07T12:56:51.179Z
+error: ApiError: Code 348534 not exist 2026-02-07T12:56:59.534Z
+error: ApiError: Code 34853 not exist 2026-02-07T12:57:07.437Z
+error: ApiError: Code 34853 not exist 2026-02-07T12:57:17.651Z
+error: ApiError: Minimal number is 100000 2026-02-07T12:57:21.811Z
+error: ApiError: Minimal number is 100000 2026-02-07T12:58:05.302Z
+error: ApiError: Code 348546 not exist 2026-02-07T12:58:10.052Z
+error: ApiError: Maximize number is 999999 2026-02-07T12:58:15.201Z
+error: ApiError: Fail to send the email 2026-02-07T12:58:32.619Z
+error: Query: Insert otp code 6ms error: value "1770469264038" is out of range for type integer 2026-02-07T13:00:04.044Z
+error: UnExpected Error: error: value "1770469264038" is out of range for type integer 2026-02-07T13:00:04.048Z
+error: ApiError: Otp expired 2026-02-07T13:14:30.465Z
+error: ApiError: Code 585585 not exist 2026-02-07T13:15:35.273Z
+error: Query: Update user 3ms error: syntax error at or near "FROM" 2026-02-07T13:15:54.985Z
+error: UnExpected Error: error: syntax error at or near "FROM" 2026-02-07T13:15:54.985Z
+error: ApiError: Otp expired 2026-02-08T02:08:42.187Z
+error: ApiError: Code 719909 not exist 2026-02-08T02:09:05.158Z
+error: ApiError: Code 719909 not exist 2026-02-08T02:09:09.003Z
+error: Query: Update user 2ms error: syntax error at or near "FROM" 2026-02-08T02:10:08.750Z
+error: UnExpected Error: error: syntax error at or near "FROM" 2026-02-08T02:10:08.750Z
+error: ApiError: Otp expired 2026-02-08T02:12:19.682Z
+error: ApiError: Code 169197 not exist 2026-02-08T02:18:17.079Z
+error: ApiError: User already exist 2026-02-08T02:18:25.379Z
+error: ApiError: Code 693085 not exist 2026-02-08T02:19:41.003Z
+error: ApiError: Code 594799 not exist 2026-02-08T02:21:58.097Z
