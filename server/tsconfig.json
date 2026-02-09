@@ -19,7 +19,7 @@
         "moduleResolution": "nodenext",
         "outDir": "dist",
         // Where to start the file structure
-        "rootDir": "src",
+        "rootDir": ".",
         // Strict Type-Checking 
         "strict": true,                                      
         "noImplicitAny": true,                               
@@ -35,6 +35,6 @@
         "noFallthroughCasesInSwitch": true,
         "noEmitOnError": true
     },
-    "include": ["src/**/*.ts"],
+    "include": ["src/**/*.ts","test/**/*.ts"],
     "exclude": ["node_modules"]
 }

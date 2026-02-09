@@ -17,7 +17,7 @@ export const authRouter = express.Router();
 authRouter.post("/login",userSchemaChecker(LoginUserSchema),loginController);
 authRouter.post("/signup",userSchemaChecker(CreateUserSchema),signupController);
 authRouter.post("/verification",userSchemaChecker(VerifySignupSchema),verifyOtpController);
-authRouter.get("/getotp",userSchemaChecker(GetOtpSchema),getOtpController);
+authRouter.post("/getotp",userSchemaChecker(GetOtpSchema),getOtpController);
 authRouter.post("/resetpassword",userSchemaChecker(PasswordResetSchema),passwordResetController);
 authRouter.delete("/logout",logoutController);
 authRouter.get("/refresh",refreshTokenVerify,refreshController);

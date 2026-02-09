@@ -114,7 +114,7 @@ export const passwordResetController = asyncHandler(async(req,res) => {
     const updatedUser = await resetPassword(user);
     const responseObject = {
         state: "success" as const,
-        data: updatedUser
+        data: { user: updatedUser }
     }
     res.status(200).json(responseEnvelope(responseObject));
 })

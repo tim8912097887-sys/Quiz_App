@@ -121,9 +121,13 @@ export const createUniqueUser = async(username: string,email: string,password: s
         // Commit the transaction
         await client.query('COMMIT');
         return result.rows[0];
-    } catch (error) {
+    } catch (error: any) {
         // Rollback the error
         await client.query('ROLLBACK');
+        // 23505 is the Postgres code for unique_violation
+        if (error.code === '23505') {
+            throw new ServerConflictError("User already exist");
+        }
         throw error
     } finally {
         // Release prevent run out of client
