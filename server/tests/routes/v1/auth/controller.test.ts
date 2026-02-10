@@ -8,6 +8,26 @@ import { futureDate } from "@/utilities/date.js";
 import { createToken } from "@/utilities/token.js";
 import { env } from "@/configs/env.js";
 
+// Factory function
+function createUserInfo(user: { username?: string,email?: string,password?: string }) {
+    const baseInfo = {
+        username: "austin",
+        email: "tim8912097887@gmail.com",
+        password: "Aer3489!"
+    }
+    const userInfo = { ...baseInfo,...user };
+    return userInfo;
+}
+
+function loginUserInfo(user: { email?: string,password?: string }) {
+    const baseInfo = {
+        email: "tim8912097887@gmail.com",
+        password: "Aer3489!"
+    }
+    const userInfo = { ...baseInfo,...user };
+    return userInfo;
+}
+
 describe("Auth Integration test",() => {
 
     // Global data
@@ -27,19 +47,15 @@ describe("Auth Integration test",() => {
         describe("Success",() => {
             // Clean up database for test isolation
             afterEach(async() => {
-                    const deleteUsers = `DELETE FROM users`;
-                    const deleteOtp = `DELETE FROM otp`;
-                    await dbQuery("Delete User",deleteUsers,[]);
-                    await dbQuery("Delete Otp",deleteOtp,[]);
+                    // RESTART IDENTITY makes sure next user starts at ID: 1 again
+                    // Faster than delete
+                    const truncateQuery = `TRUNCATE TABLE users, otp RESTART IDENTITY CASCADE`;
+                    await dbQuery("Cleanup", truncateQuery, []);
             },10000)
 
             it('When Signup with valid data,should response with 201 statusCode and User object', async() => {
                 // Arrange
-                const userInfo = {
-                    username,
-                    email,
-                    password
-                }
+                const userInfo = createUserInfo({});
                 // Act
                 const response = await request(app)
                                 .post("/api/v1/auth/signup")
@@ -56,11 +72,7 @@ describe("Auth Integration test",() => {
 
             it('When Signup with uppercase username,should response with 201 statusCode and lowercase username', async() => {
                 // Arrange
-                const userInfo = {
-                    username: username.toUpperCase(),
-                    email,
-                    password
-                }
+                const userInfo = createUserInfo({ username: username.toUpperCase() });
                 
                 // Act
                 const response = await request(app)
@@ -78,11 +90,8 @@ describe("Auth Integration test",() => {
 
             it('When Signup with uppercase email,should response with 201 statusCode and lowercase email', async() => {
                 // Arrange
-                const userInfo = {
-                    username,
-                    email: "Tim8912097887@gmail.com",
-                    password
-                }
+                const userInfo = createUserInfo({ email: "Tim8912097887@gmail.com" });
+                // Prevent gmail rate-limit error
                 await new Promise(resolve => setTimeout(resolve, 1000));
                 // Act
                 const response = await request(app)
@@ -102,17 +111,15 @@ describe("Auth Integration test",() => {
         describe("Validation Fail",() => {
 
             afterAll(async() => {
-                const deleteUsers = `DELETE FROM users`;
-                await dbQuery("Delete User",deleteUsers,[]);
+                // RESTART IDENTITY makes sure next user starts at ID: 1 again
+                    // Faster than delete
+                const truncateQuery = `TRUNCATE TABLE users RESTART IDENTITY CASCADE`;
+                await dbQuery("Cleanup", truncateQuery, []);
             },10000)
             // Invalid username
             it('When provide username less than two character,should response with 400 statusCode and Bad Request Error', async() => {
                 // Arrange
-                const userInfo = {
-                    username: "e",
-                    email,
-                    password
-                }
+                const userInfo = createUserInfo({ username: "e" });
                 // Act
                 const response = await request(app)
                                 .post("/api/v1/auth/signup")
@@ -129,11 +136,7 @@ describe("Auth Integration test",() => {
 
             it('When provide username longer than sixty character,should response with 400 statusCode and Bad Request Error', async() => {
                 // Arrange
-                const userInfo = {
-                    username: new Array(17).fill("sdf").join(","),
-                    email,
-                    password
-                }
+                const userInfo = createUserInfo({ username: new Array(17).fill("sdf").join(",") });
                 // Act
                 const response = await request(app)
                                 .post("/api/v1/auth/signup")
@@ -150,11 +153,7 @@ describe("Auth Integration test",() => {
 
             it('When provide username with ?,should response with 400 statusCode and Bad Request Error', async() => {
                 // Arrange
-                const userInfo = {
-                    username: username+"?",
-                    email,
-                    password
-                }
+                const userInfo = createUserInfo({ username: username+"?" });
                 // Act
                 const response = await request(app)
                                 .post("/api/v1/auth/signup")
@@ -171,11 +170,7 @@ describe("Auth Integration test",() => {
             // Invalid Email
             it('When provide invalid email,should response with 400 statusCode and Bad Request Error', async() => {
                 // Arrange
-                const userInfo = {
-                    username,
-                    email: "invalidemail",
-                    password
-                }
+                const userInfo = createUserInfo({ email: "invalidemail" });
                 // Act
                 const response = await request(app)
                                 .post("/api/v1/auth/signup")
@@ -192,11 +187,7 @@ describe("Auth Integration test",() => {
             // Invalid Password
             it('When provide password less than eight character,should response with 400 statusCode and Bad Request Error', async() => {
                 // Arrange
-                const userInfo = {
-                    username,
-                    email,
-                    password: "Qe25?"
-                }
+                const userInfo = createUserInfo({ password: "Qe25?" });
                 // Act
                 const response = await request(app)
                                 .post("/api/v1/auth/signup")
@@ -213,11 +204,7 @@ describe("Auth Integration test",() => {
 
             it('When provide password longer than fifty character,should response with 400 statusCode and Bad Request Error', async() => {
                 // Arrange
-                const userInfo = {
-                    username,
-                    email,
-                    password: password+new Array(6).fill("sodfjwef")
-                }
+                const userInfo = createUserInfo({ password: password+new Array(6).fill("sodfjwef") });
                 // Act
                 const response = await request(app)
                                 .post("/api/v1/auth/signup")
@@ -234,11 +221,7 @@ describe("Auth Integration test",() => {
 
             it('When provide invalid password,should response with 400 statusCode and Bad Request Error', async() => {
                 // Arrange
-                const userInfo = {
-                    username,
-                    email,
-                    password: "invalid89"
-                }
+                const userInfo = createUserInfo({ password: "invalid89" });
                 // Act
                 const response = await request(app)
                                 .post("/api/v1/auth/signup")
@@ -255,11 +238,7 @@ describe("Auth Integration test",() => {
 
             it('When provide not exist email,should response with 500 statusCode and Server Error', async() => {
                 // Arrange
-                const userInfo = {
-                    username,
-                    email: "notExist@email.com",
-                    password
-                }
+                const userInfo = createUserInfo({ email: "notExist@email.com" });
                 // Act
                 const response = await request(app)
                                 .post("/api/v1/auth/signup")
@@ -288,17 +267,15 @@ describe("Auth Integration test",() => {
                 expect(result.rowCount).toBe(1);
             },10000)
             afterAll(async() => {
-                    const deleteUsers = `DELETE FROM users`;
-                    await dbQuery("Delete User",deleteUsers,[]);
+                    // RESTART IDENTITY makes sure next user starts at ID: 1 again
+                    // Faster than delete
+                    const truncateQuery = `TRUNCATE TABLE users RESTART IDENTITY CASCADE`;
+                    await dbQuery("Cleanup", truncateQuery, []);
             },10000)
 
             it('When provide duplicate username,should response with 409 statusCode and Server Conflict Error', async() => {
                 // Arrange
-                const userInfo = {
-                    username,
-                    email: "nonduplicate@email.com",
-                    password
-                }
+                const userInfo = createUserInfo({ email: "nonduplicate@email.com" });
                 // Act
                 const response = await request(app)
                                 .post("/api/v1/auth/signup")
@@ -315,11 +292,7 @@ describe("Auth Integration test",() => {
 
             it('When provide duplicate email,should response with 409 statusCode and Server Conflict Error', async() => {
                 // Arrange
-                const userInfo = {
-                    username: "reaves",
-                    email,
-                    password
-                }
+                const userInfo = createUserInfo({ username: "reaves" });
                 // Act
                 const response = await request(app)
                                 .post("/api/v1/auth/signup")
@@ -350,20 +323,17 @@ describe("Auth Integration test",() => {
             expect(result.rowCount).toBe(1);
         },10000);
         afterAll(async() => {
-            const deleteUsers = `DELETE FROM users`;
-            const deleteOtp = `DELETE FROM otp`;
-            await dbQuery("Delete User",deleteUsers,[]);
-            await dbQuery("Delete Otp",deleteOtp,[]);
+            // RESTART IDENTITY makes sure next user starts at ID: 1 again
+            // Faster than delete
+            const truncateQuery = `TRUNCATE TABLE users, otp RESTART IDENTITY CASCADE`;
+            await dbQuery("Cleanup", truncateQuery, []);
         },10000)
 
         describe("Success",() => {
 
             it('When Login with valid and exist user,should response with 200 statusCode and User object', async() => {
                 // Arrange
-                const userInfo = {
-                    email,
-                    password
-                }
+                const userInfo = loginUserInfo({});
                 // Act
                 const response = await request(app)
                                 .post("/api/v1/auth/login")
@@ -380,10 +350,7 @@ describe("Auth Integration test",() => {
 
             it('When Login with Uppercase email,should response with 200 statusCode and lowercase email', async() => {
                 // Arrange
-                const userInfo = {
-                    email: "Tim8912097887@gmail.com",
-                    password
-                }
+                const userInfo = loginUserInfo({ email: "Tim8912097887@gmail.com" });
                 // Act
                 const response = await request(app)
                                 .post("/api/v1/auth/login")
@@ -403,10 +370,7 @@ describe("Auth Integration test",() => {
             // Invalid Email
             it('When provide invalid email,should response with 400 statusCode and Bad Request Error', async() => {
                 // Arrange
-                const userInfo = {
-                    email: "invalidemail",
-                    password
-                }
+                const userInfo = loginUserInfo({ email: "invalidemail" });
                 // Act
                 const response = await request(app)
                                 .post("/api/v1/auth/login")
@@ -423,10 +387,7 @@ describe("Auth Integration test",() => {
             // Invalid Password
             it('When provide password less than eight character,should response with 400 statusCode and Bad Request Error', async() => {
                 // Arrange
-                const userInfo = {
-                    email,
-                    password: "Qe25?"
-                }
+                const userInfo = loginUserInfo({ password: "Qe25?" });
                 // Act
                 const response = await request(app)
                                 .post("/api/v1/auth/login")
@@ -443,10 +404,7 @@ describe("Auth Integration test",() => {
 
             it('When provide password longer than fifty character,should response with 400 statusCode and Bad Request Error', async() => {
                 // Arrange
-                const userInfo = {
-                    email,
-                    password: password+new Array(6).fill("sodfjwef")
-                }
+                const userInfo = loginUserInfo({ password: password+new Array(6).fill("sodfjwef") });
                 // Act
                 const response = await request(app)
                                 .post("/api/v1/auth/login")
@@ -463,10 +421,7 @@ describe("Auth Integration test",() => {
 
             it('When provide invalid password,should response with 400 statusCode and Bad Request Error', async() => {
                 // Arrange
-                const userInfo = {
-                    email,
-                    password: "invalid89"
-                }
+                const userInfo = loginUserInfo({ password: "invalid89" });
                 // Act
                 const response = await request(app)
                                 .post("/api/v1/auth/login")
@@ -486,10 +441,7 @@ describe("Auth Integration test",() => {
 
             it('When provide not exist Email,should response with 409 statusCode and Server Conflict Error', async() => {
                 // Arrange
-                const userInfo = {
-                    email: "notExist@gmail.com",
-                    password
-                }
+                const userInfo = loginUserInfo({ email: "notExist@gmail.com" });
                 // Act
                 const response = await request(app)
                                 .post("/api/v1/auth/login")
@@ -506,10 +458,7 @@ describe("Auth Integration test",() => {
 
             it('When provide exist email but not correct password,should response with 409 statusCode and Server Conflict Error', async() => {
                 // Arrange
-                const userInfo = {
-                    email,
-                    password: password+"2"
-                }
+                const userInfo = loginUserInfo({ password: password+"2" });
                 // Act
                 const response = await request(app)
                                 .post("/api/v1/auth/login")
@@ -537,10 +486,10 @@ describe("Auth Integration test",() => {
                 const value = [newUsername,newEmail,hashedPassword];
                 const result = await dbQuery("Create User",queryString,value);
                 expect(result.rowCount).toBe(1);
-                const userInfo = {
+                const userInfo = loginUserInfo({
                     email: newEmail,
                     password: password
-                }
+                })
                 // Act
                 const response = await request(app)
                                 .post("/api/v1/auth/login")
@@ -582,10 +531,10 @@ describe("Auth Integration test",() => {
                     expect(otpResult.rowCount).toBe(1);
                 },10000);
                 afterEach(async() => {
-                    const deleteUsers = `DELETE FROM users`;
-                    const deleteOtp = `DELETE FROM otp`;
-                    await dbQuery("Delete User",deleteUsers,[]);
-                    await dbQuery("Delete Otp",deleteOtp,[]);
+                    // RESTART IDENTITY makes sure next user starts at ID: 1 again
+                    // Faster than delete
+                    const truncateQuery = `TRUNCATE TABLE users, otp RESTART IDENTITY CASCADE`;
+                    await dbQuery("Cleanup", truncateQuery, []);
                 },10000)
 
               it('When verify with valid Otp and email,should response with 201 statusCode and UpdatedUser object', async() => {
@@ -711,11 +660,7 @@ describe("Auth Integration test",() => {
         })
 
         describe("Auth Error",() => {
- 
-            // Clean up otp
-            afterAll(async() => {
 
-            })
             it('When provide not exist otp,should response with 404 statusCode and Not Found Error', async() => {
                 // Arrange
                 const userInfo = {
@@ -780,8 +725,10 @@ describe("Auth Integration test",() => {
             expect(result.rowCount).toBe(1);
         },10000)
         afterAll(async() => {
-            const deleteUsers = `DELETE FROM users`;
-            await dbQuery("Delete User",deleteUsers,[]);
+            // RESTART IDENTITY makes sure next user starts at ID: 1 again
+            // Faster than delete
+            const truncateQuery = `TRUNCATE TABLE users RESTART IDENTITY CASCADE`;
+            await dbQuery("Cleanup", truncateQuery, []);
         },10000)
         describe("Success",() => {
    
@@ -930,10 +877,10 @@ describe("Auth Integration test",() => {
                 expect(otpResult.rowCount).toBe(1);
             },10000);
             afterAll(async() => {
-                const deleteUsers = `DELETE FROM users`;
-                const deleteOtp = `DELETE FROM otp`;
-                await dbQuery("Delete User",deleteUsers,[]);
-                await dbQuery("Delete Otp",deleteOtp,[]);
+                // RESTART IDENTITY makes sure next user starts at ID: 1 again
+                // Faster than delete
+                const truncateQuery = `TRUNCATE TABLE users, otp RESTART IDENTITY CASCADE`;
+                await dbQuery("Cleanup", truncateQuery, []);
             },10000)
             it('When successfully reset the password,should response with 200 statusCode and Updated User and Login with new Password', async() => {
                 // Arrange
@@ -1079,8 +1026,10 @@ describe("Auth Integration test",() => {
                 expect(result.rowCount).toBe(1);
             },10000);
             afterAll(async() => {
-                const deleteUsers = `DELETE FROM users`;
-                await dbQuery("Delete User",deleteUsers,[]);
+                // RESTART IDENTITY makes sure next user starts at ID: 1 again
+                // Faster than delete
+                const truncateQuery = `TRUNCATE TABLE users RESTART IDENTITY CASCADE`;
+                await dbQuery("Cleanup", truncateQuery, []);
             },10000)    
 
             it('When provide not exist email,should response with 404 statusCode and Not Found Error', async() => {
