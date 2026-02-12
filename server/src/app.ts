@@ -1,12 +1,15 @@
 import express from "express";
 import morgan from "morgan";
+import cors from "cors";
 import cookieParser from "cookie-parser";
 import { logger } from "@utilities/logger.js";
 import { v1Router } from "@routes/v1/index.js";
 import { errorHandler } from "@middleware/errorHandler.js";
+import { corsOptions } from "./configs/corsOption.js";
 
 export const app = express();
 
+app.use(cors(corsOptions));
 // Http logging
 app.use(morgan("dev"));
 // Body and Cookie parser
